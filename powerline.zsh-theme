@@ -26,10 +26,12 @@ else
     POWERLINE_USER_NAME=""
 fi
 
-POWERLINE_CURRENT_PATH="%d"
+if [ "$POWERLINE_CURRENT_PATH" = "" ]; then
+  POWERLINE_CURRENT_PATH="%d"
 
-if [ "$POWERLINE_FULL_CURRENT_PATH" = "" ]; then
-  POWERLINE_CURRENT_PATH="%1~"
+  if [ "$POWERLINE_FULL_CURRENT_PATH" = "" ]; then
+    POWERLINE_CURRENT_PATH="%1~"
+  fi
 fi
 
 if [ "$POWERLINE_GIT_CLEAN" = "" ]; then
@@ -79,10 +81,10 @@ ZSH_THEME_GIT_PROMPT_AHEAD=" ⬆"
 ZSH_THEME_GIT_PROMPT_BEHIND=" ⬇"
 ZSH_THEME_GIT_PROMPT_DIVERGED=" ⬍"
 
-# if [ "$(git_prompt_info)" = "" ]; then
-   # POWERLINE_GIT_INFO_LEFT=""
-   # POWERLINE_GIT_INFO_RIGHT=""
-# else
+if [ "$(git_prompt_info)" = "" ]; then
+   POWERLINE_GIT_INFO_LEFT=""
+   POWERLINE_GIT_INFO_RIGHT=""
+else
     if [ "$POWERLINE_SHOW_GIT_ON_RIGHT" = "" ]; then
         if [ "$POWERLINE_HIDE_GIT_PROMPT_STATUS" = "" ]; then
             POWERLINE_GIT_INFO_LEFT=" %F{blue}%K{white}"$'\ue0b0'"%F{white}%F{black}%K{white}"$'$(git_prompt_info)$(git_prompt_status)%F{white}'
@@ -94,7 +96,7 @@ ZSH_THEME_GIT_PROMPT_DIVERGED=" ⬍"
         POWERLINE_GIT_INFO_LEFT=""
         POWERLINE_GIT_INFO_RIGHT="%F{white}"$'\ue0b2'"%F{black}%K{white}"$'$(git_prompt_info)'" %K{white}"
     fi
-# fi
+fi
 
 if [ $(id -u) -eq 0 ]; then
     POWERLINE_SEC1_BG=%K{red}
